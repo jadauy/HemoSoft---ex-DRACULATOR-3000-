@@ -18,14 +18,11 @@ def calcular_vencimientos(unidades_sangre, hoy = None):
         fecha_vencimiento_str = unidad.fecha_vencimiento
         fecha_vencimiento = parsear_fecha(fecha_vencimiento_str)
 
-        fecha_vencimiento_proximo = fecha_vencimiento - timedelta(days = DIAS_VENCIMIENTO)
-
         if fecha_hoy >= fecha_vencimiento:
             unidades_vencidas.append(unidad)
 
-        # Se toma en cuenta "fecha_vencimiento_proximo" para determinar si la unidad está por vencer en los próximos 7 días, y se agrega a la lista de unidades por vencer si cumple esa condición
-        
-        elif fecha_hoy >= fecha_vencimiento_proximo and fecha_hoy < fecha_vencimiento:
+        # Si la fecha de vencimiento es hoy, se considera vencida, si la fecha de vencimiento es dentro de los próximos 7 días, se considera por vencer
+        elif fecha_hoy <= fecha_vencimiento and fecha_vencimiento <= fecha_hoy + timedelta(days = DIAS_VENCIMIENTO):
             unidades_por_vencer.append(unidad)
 
     return unidades_vencidas, unidades_por_vencer

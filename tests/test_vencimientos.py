@@ -1,7 +1,7 @@
 import unittest
 from datetime import date
 from donantes.donacion import Hemocomponente
-from donantes.validaciones import FORMATO_FECHA
+from donantes.validaciones import FORMATO_FECHA, parsear_fecha
 from donantes.vencimientos import calcular_vencimientos, ordenar_por_vencer
 
 class TestVencimientos(unittest.TestCase):
@@ -40,7 +40,9 @@ class TestVencimientos(unittest.TestCase):
     def test_orden_por_vencer(self):
         unidades_ordenadas = ordenar_por_vencer(self.unidades_por_vencer)
         fechas_ordenadas = [u.fecha_vencimiento for u in unidades_ordenadas]
-        fechas_esperadas = sorted(fechas_ordenadas, key = lambda f: date.strptime(f, FORMATO_FECHA))
+
+        # Ahora se ocupa parsear_fecha para ordenar las fechas esperadas y compararlas con las fechas ordenadas
+        fechas_esperadas = sorted(fechas_ordenadas, key = lambda f: parsear_fecha(f))
         self.assertEqual(fechas_ordenadas, fechas_esperadas)
 
     # Se verifica una unidad que venció ayer se encuentra en la lista de unidades vencidas
