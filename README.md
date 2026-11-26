@@ -16,7 +16,7 @@ que instalar librerías extra.
 python main.py
 ```
 
-La ventana tiene cuatro pestañas, que siguen el orden de la atención de un donante:
+La ventana tiene cinco pestañas, que siguen el orden de la atención de un donante:
 
 | Pestaña | Historia | Qué hace |
 |---|---|---|
@@ -24,6 +24,7 @@ La ventana tiene cuatro pestañas, que siguen el orden de la atención de un don
 | Evaluación | H2 | Registra la evaluación de elegibilidad y muestra APTO, DIFERIDO o NO APTO |
 | Donación | H3 | Registra la extracción y genera la unidad con su código de barras |
 | Buscar unidad | H3 | Muestra la traza completa de una unidad a partir de su código |
+| Inventario | H4 | Muestra stock vigente por grupo y unidades próximas a vencer o vencidas |
 
 `python consola.py` abre el menú de consola del inicio del sprint (solo como herramienta de prueba).
 
@@ -53,6 +54,10 @@ plazo mínimo desde su última donación (3 meses hombres, 4 meses mujeres). Cad
 `SSS AAMMDD NNNN V` (sede, fecha, correlativo y dígito verificador), se dibuja en Code 39 y vence a los
 42 días. La unidad se puede buscar por su código para ver donante, sede, fechas y si está vigente.
 
+**H4 · Inventario:** muestra las unidades vigentes en los ocho grupos sanguíneos, permite filtrar por sede,
+resalta en rojo los grupos con 0 a 4 unidades y separa las unidades que vencen en menos de 7 días de las
+que ya vencieron. El botón «Actualizar» vuelve a leer los archivos guardados.
+
 ## Estructura
 
 | Archivo | Task | Qué hace |
@@ -72,4 +77,5 @@ plazo mínimo desde su última donación (3 meses hombres, 4 meses mujeres). Cad
 | `donantes/codigo_barras.py`, `interfaz/dibujo_codigo.py` | T3.4 | Código único, vencimiento y dibujo Code 39 |
 | `donantes/servicio_donaciones.py`, `interfaz/form_donacion.py` | T3.5, T3.6 | Pestaña Donación y sus mensajes |
 | `interfaz/busqueda_unidad.py` | T3.7 | Pestaña Buscar unidad |
+| `donantes/inventario.py`, `donantes/vencimientos.py`, `interfaz/inventario.py` | H4 | Cálculo de stock, vencimientos y pestaña Inventario |
 | `donantes/archivo_txt.py` | — | Lectura y escritura común de los `.txt` |

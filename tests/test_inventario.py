@@ -52,15 +52,35 @@ class TestInventario(unittest.TestCase):
 
     def test_las_vencidas_no_cuentan_y_el_dia_de_vencimiento_si(self):
         self.donante("12.345.678-5", "B+")
-        self.unidad("12345678-5", "21-11-2026")  # venció ayer
-        self.unidad("12345678-5", "22-11-2026")  # vence hoy: todavía vigente
+        self.unidad("12345678-5", "21-11-2026")  
+        self.unidad("12345678-5", "22-11-2026")  
         self.assertEqual(self.inventario.stock_por_grupo(HOY)["B+"], 1)
 
     def test_unidad_sin_donante_no_se_asigna_a_ningun_grupo(self):
-        self.unidad("10000013-K", "13-12-2026")  # donante no registrado
+        self.unidad("10000013-K", "13-12-2026")  
         unidades = self.inventario.unidades()
         self.assertIsNone(unidades[0].tipo_sangre)
         self.assertEqual(self.inventario.total_vigente(HOY), 0)
+
+    def test_filtro_todas_suma_las_unidades_de_todas_las_sedes(self):
+        self.donante("12.345.678-5", "O+")
+        self.unidad("12345678-5", "13-12-2026", "CON")
+        self.unidad("12345678-5", "13-12-2026", "TAL")
+        self.assertEqual(self.inventario.stock_por_grupo(HOY, "Todas")["O+"], 2)
+        self.assertEqual(self.inventario.total_vigente(HOY, None), 2)
+
+    def test_filtro_por_sede_no_incluye_otra_sede(self):
+        self.donante("12.345.678-5", "O+")
+        self.unidad("12345678-5", "13-12-2026", "CON")
+        self.unidad("12345678-5", "13-12-2026", "TAL")
+        self.assertEqual(self.inventario.stock_por_grupo(HOY, "CON")["O+"], 1)
+        self.assertEqual(self.inventario.stock_por_grupo(HOY, "Sede Talcahuano")["O+"], 1)
+        self.assertEqual(self.inventario.total_vigente(HOY, "CHI"), 0)
+
+    def test_sede_sin_unidades_muestra_todos_los_grupos_en_cero(self):
+        stock = self.inventario.stock_por_grupo(HOY, "CHI")
+        self.assertEqual(list(stock), list(TIPOS_SANGRE))
+        self.assertTrue(all(v == 0 for v in stock.values()))
 
 
 if __name__ == "__main__":
