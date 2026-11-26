@@ -21,10 +21,10 @@ class TestVencimientos(unittest.TestCase):
         ]
         self.unidades_vencidas, self.unidades_por_vencer = calcular_vencimientos(self.unidades, hoy = self.hoy)
 
-    # Test que verifica una unidad vencida se encuentra en la lista de unidades vencidas
+    # Test que verifica una unidad vencida se encuentra en la lista de unidades no vencidas
     def test_vence_hoy(self):
-        self.assertIn(self.unidades[0], self.unidades_vencidas)
-        self.assertNotIn(self.unidades[0], self.unidades_por_vencer)
+        self.assertNotIn(self.unidades[0], self.unidades_vencidas)
+        self.assertIn(self.unidades[0], self.unidades_por_vencer)
 
     # Caso borde: unidad que va a vencer en 7 días
     def test_por_vencer_7_dias(self):
