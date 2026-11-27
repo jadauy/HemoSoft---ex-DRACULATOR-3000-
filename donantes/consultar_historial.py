@@ -96,7 +96,5 @@ def obtener_historial_donante(rut_ingresado, donantes):
         ],
     }
 
-"""MÉTODO AUXILIAR QUE NORMALIZA EL RUT DE UN DONANTE GUARDADO EN LA BASE DE DATOS"""
-def _clave_rut(rut):
-    """Normaliza un RUT guardado (con o sin formato) para poder compararlo."""
-    return str(rut).replace(".", "").replace("-", "").replace(" ", ").upper()
+
+
