@@ -7,6 +7,7 @@ from interfaz.form_donante import FormularioDonante
 from interfaz.form_donacion import FormularioDonacion
 from interfaz.form_evaluacion import FormularioEvaluacion
 from interfaz.busqueda_unidad import BusquedaUnidad
+from interfaz.inventario import VistaInventario
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 ICONO = os.path.join(RAIZ, "assets", "sangre_icon.ico")
@@ -27,6 +28,7 @@ def crear_ventana():
     pestanas.add(FormularioEvaluacion(pestanas), text="Evaluación")
     pestanas.add(FormularioDonacion(pestanas), text="Donación")
     pestanas.add(BusquedaUnidad(pestanas), text="Buscar unidad")
+    pestanas.add(VistaInventario(pestanas), text="Inventario")
     return ventana
 
 
